@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Typography, Box, TextField, Button } from '@material-ui/core';
+import { Container, Typography, Box, TextField, Button } from '@material-ui/core';
+import RepositoriesGrid from './RepositoriesGrid';
 
 function App() {
   const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState(null);
 
   function search() {
     if (!username) {
@@ -30,28 +31,37 @@ function App() {
   }
 
   return (
-    <Box>
-      <Box display='flex'>
-        <TextField
-          value={username}
-          disabled={isLoading}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Box ml={1}>
-          <Button
-            color='primary'
-            variant='contained'
-            onClick={search}
+    <Container>
+      <Box>
+        <Box display='flex'>
+          <TextField
+            value={username}
             disabled={isLoading}
-          >
-            Search
-          </Button>
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Box ml={1}>
+            <Button
+              color='primary'
+              variant='contained'
+              onClick={search}
+              disabled={isLoading}
+            >
+              Search
+            </Button>
+          </Box>
         </Box>
+        {error && (
+          <Typography color='error'>{error}</Typography>
+        )}
+        {repositories === null ? (
+          <Typography variant='h6'>
+            Enter username and click "Search"
+          </Typography>
+        ) : (
+          <RepositoriesGrid repositories={repositories} />
+        )}
       </Box>
-      {error && (
-        <Typography color='error'>{error}</Typography>
-      )}
-    </Box>
+    </Container>
   );
 }
 
