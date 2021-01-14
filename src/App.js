@@ -32,6 +32,11 @@ function App() {
 
   return (
     <Container>
+      <Box mt={4}>
+        <Typography variant='h4' align='center'>
+          Search github repositories by username
+        </Typography>
+      </Box>
       <Box display='flex' width='100%'>
         <Box display='flex' mx='auto' mt={5} mb={4}>
           <TextField
@@ -41,6 +46,7 @@ function App() {
             size='small'
             helperText={error}
             error={error}
+            placeholder='Search GitHub users'
             onChange={(e) => setUsername(e.target.value)}
           />
           <Box ml={1}>
