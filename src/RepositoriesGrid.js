@@ -59,13 +59,17 @@ export default function RepositoriesGrid({ repositories }) {
 
   return (
     <Box>
-      <Typography variant='h6'>Sort by</Typography>
-      <FormControl component="fieldset">
-        <RadioGroup name="sortBy" value={sortBy} onChange={handleSortChange} row>
-          <FormControlLabel value="name" control={<Radio color='primary' />} label="Name" />
-          <FormControlLabel value="stars" control={<Radio color='primary' />} label="Stars" />
-        </RadioGroup>
-      </FormControl>
+      <Box display='flex' alignContent='center'>
+        <Box component='span' mr={3} style={{ marginTop: '3px' }}>
+          <Typography variant='h6' component='span'>Sort by</Typography>
+        </Box>
+        <FormControl component="fieldset">
+          <RadioGroup name="sortBy" value={sortBy} onChange={handleSortChange} row>
+            <FormControlLabel value="name" control={<Radio color='primary' />} label="Name" />
+            <FormControlLabel value="stars" control={<Radio color='primary' />} label="Stars" />
+          </RadioGroup>
+        </FormControl>
+      </Box>
       <Box mt={1} mb={3}>
         <Divider />
       </Box>
