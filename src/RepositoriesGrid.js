@@ -3,13 +3,15 @@ import {
   Typography,
   Box,
   FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
+  Divider,
+  Grid,
+  Paper,
 } from '@material-ui/core';
 
-export default function ({ repositories }) {
+export default function RepositoriesGrid({ repositories }) {
   const [sortBy, setSortBy] = useState('name');
 
   const sortedRepositories = sort(repositories, sortBy);
@@ -23,9 +25,32 @@ export default function ({ repositories }) {
       );
     }
 
-    return sortedRepositories.map(repository => (
-      <Box key={repository.id}>{repository.name} - {repository.stargazers_count}</Box>
-    ));
+    return (
+      <Grid container spacing={3}>
+        {sortedRepositories.map(repository => (
+          <Grid item xs={12} sm={6} md={4} key={repository.id}>
+            <Paper elevation={2}>
+              <Box p={2}>
+                <Typography variant='h6'>
+                  {repository.full_name}
+                </Typography>
+                <Typography>
+                  {repository.description}
+                </Typography>
+                <Box mt={2}>
+                  <Typography variant='subtitle2'>
+                    <Box component='span' mr={2}>
+                      Stars: {repository.stargazers_count}
+                    </Box>
+                    Watchers: {repository.watchers_count}
+                  </Typography>
+                </Box>
+              </Box>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    );
   }
 
   function handleSortChange(event) {
@@ -34,13 +59,16 @@ export default function ({ repositories }) {
 
   return (
     <Box>
+      <Typography variant='h6'>Sort by</Typography>
       <FormControl component="fieldset">
-        <FormLabel component="legend">Sort by</FormLabel>
-        <RadioGroup name="sortBy" value={sortBy} onChange={handleSortChange}>
-          <FormControlLabel value="name" control={<Radio />} label="Name" />
-          <FormControlLabel value="stars" control={<Radio />} label="Stars" />
+        <RadioGroup name="sortBy" value={sortBy} onChange={handleSortChange} row>
+          <FormControlLabel value="name" control={<Radio color='primary' />} label="Name" />
+          <FormControlLabel value="stars" control={<Radio color='primary' />} label="Stars" />
         </RadioGroup>
       </FormControl>
+      <Box mt={1} mb={3}>
+        <Divider />
+      </Box>
       {getContent()}
     </Box>
   )

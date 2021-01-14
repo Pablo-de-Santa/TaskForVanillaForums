@@ -32,11 +32,15 @@ function App() {
 
   return (
     <Container>
-      <Box>
-        <Box display='flex'>
+      <Box display='flex' width='100%'>
+        <Box display='flex' mx='auto' mt={5} mb={4}>
           <TextField
             value={username}
             disabled={isLoading}
+            variant='outlined'
+            size='small'
+            helperText={error}
+            error={error}
             onChange={(e) => setUsername(e.target.value)}
           />
           <Box ml={1}>
@@ -50,17 +54,15 @@ function App() {
             </Button>
           </Box>
         </Box>
-        {error && (
-          <Typography color='error'>{error}</Typography>
-        )}
-        {repositories === null ? (
-          <Typography variant='h6'>
-            Enter username and click "Search"
-          </Typography>
-        ) : (
-          <RepositoriesGrid repositories={repositories} />
-        )}
       </Box>
+      {repositories !== null && (
+        <>
+          <Box mb={1}>
+            <Typography variant='h5'>Listing repositories for the user "{username}"</Typography>
+          </Box>
+          <RepositoriesGrid repositories={repositories} />
+        </>
+      )}
     </Container>
   );
 }
